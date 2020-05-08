@@ -36,7 +36,7 @@ def cityreader(cities=[]):
     # For each city record, create a new City instance and add it to the
     # `cities` list
 
-    with open("cities.csv", newline="") as csvfile:
+    with open("/Users/tadepew/Desktop/Lambda Projects/Sprint-Challenge--Intro-Python/src/cityreader/cities.csv", newline="") as csvfile:
 
         lines = csv.reader(csvfile, delimiter=",")
 
