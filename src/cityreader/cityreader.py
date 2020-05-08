@@ -37,6 +37,7 @@ def cityreader(cities=[]):
     # `cities` list
 
     with open("/Users/tadepew/Desktop/Lambda Projects/Sprint-Challenge--Intro-Python/src/cityreader/cities.csv", newline="") as csvfile:
+      # Why can't I just write cities.csv????
 
         lines = csv.reader(csvfile, delimiter=",")
 
@@ -85,12 +86,49 @@ for c in cities:
 # TODO Get latitude and longitude values from the user
 
 
+def match_cities():
+    print("Search for a city:")
+    corner_1 = input("Enter lat and long of one corner seperated by a comma\n")
+    corner_2 = input(
+        "Enter lat and long of other corner seperated by a comma\n")
+
+    # CONVERT coordinates
+    conv_corner_1 = [float(value.strip()) for value in corner_1.split(",")]
+    conv_corner_2 = [float(value.strip()) for value in corner_2.split(",")]
+
+    # print(conv_corner_1)
+
+    global cities
+    matching_cities = cityreader_stretch(
+        conv_corner_1[0], conv_corner_1[1], conv_corner_2[0], conv_corner_2[1], cities)
+
+    if len(matching_cities) > 0:
+        print("Matching cities found below:\n")
+
+        for c in matching_cities:
+            print(c)
+
+    else:
+        print("No cities found. Try again\n")
+
+    return matching_cities
+
+
 def cityreader_stretch(lat1, lon1, lat2, lon2, cities=[]):
     # within will hold the cities that fall within the specified region
-    within = []
+    min_lat = min(lat1, lat2)
+    min_lon = min(lon1, lon2)
+    max_lat = max(lat1, lat2)
+    max_lon = max(lon1, lon2)
+    # print(min_lat)
+    within = [c for c in cities if (c.lat >= min_lat) and (
+        c.lat <= max_lat) and (c.lon >= min_lon) and (c.lon <= max_lon)]
 
     # TODO Ensure that the lat and lon valuse are all floats
     # Go through each city and check to see if it falls within
     # the specified coordinates.
 
     return within
+
+
+match_cities()
